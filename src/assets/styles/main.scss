@@ -1,0 +1,112 @@
+/* Colors */
+$color-dark: rgb(27, 28, 58) !default;
+$color-medium: rgb(140, 138, 195) !default;
+$color-light: rgb(234, 234, 236) !default;
+$color-back: rgb(2, 14, 101) !default;
+
+$color-white: rgba(255, 255, 255, 1) !default;
+$color-black: rgba(0, 0, 0, 1) !default;
+
+$color-alpha: rgb(1, 198, 150) !default;
+$color-beta: rgb(251, 73, 192) !default;
+$color-charlie: rgb(245, 165, 36) !default;
+$color-delta: rgb(83, 185, 234) !default;
+$color-echo: rgb(255, 82, 82) !default;
+
+$color-success: $color-alpha !default;
+$color-error: $color-echo !default;
+
+$color-grey-light: rgba($color-dark, 0.05) !default;
+$color-grey-medium: rgba($color-dark, 0.1) !default;
+$color-grey-dark: rgba($color-dark, 0.5) !default;
+
+$color-text: $color-dark !default;
+
+/* Type */
+$font-stack: 'Public Sans', sans-serif !default;
+
+/* Sizes */
+$rem-size: 16px !default;
+$font-size: 16px !default;
+
+/* Font-sizes */
+$size-huge: 4rem !default;
+$size-big: 2.5rem !default;
+$size-larger: 2rem !default;
+$size-large: 1.5rem !default;
+$size-medium: 1.25rem !default;
+$size-regular: 1rem !default;
+$size-small: 0.875rem !default;
+$size-tiny: 0.75rem !default;
+
+/* Weights */
+$weight-regular: 400 !default;
+$weight-medium: 500 !default;
+$weight-semibold: 600 !default;
+$weight-bold: 700 !default;
+$weight-black: 800 !default;
+
+/* Media queries */
+$device-small: 24rem !default;
+$device-medium: 40rem !default;
+$device-large: 56rem !default;
+$device-max: 72rem !default;
+
+/* Colors */
+$color-dark: rgb(27, 28, 58) !default;
+$color-medium: rgb(140, 138, 195) !default;
+$color-light: rgb(234, 234, 236) !default;
+$color-back: rgb(2, 14, 101) !default;
+
+$color-white: rgba(255, 255, 255, 1) !default;
+$color-black: rgba(0, 0, 0, 1) !default;
+
+$color-success: $color-alpha !default;
+$color-error: $color-echo !default;
+
+$color-grey-light: rgba($color-dark, 0.05) !default;
+$color-grey-medium: rgba($color-dark, 0.1) !default;
+$color-grey-dark: rgba($color-dark, 0.5) !default;
+
+$color-text: $color-dark !default;
+$color-border: $color-light !default;
+
+/* Sizes */
+$rem-size: 16px !default;
+$font-size: 16px !default;
+
+/* Font-sizes */
+$size-huge: 4rem !default;
+$size-big: 2.5rem !default;
+$size-larger: 2rem !default;
+$size-large: 1.5rem !default;
+$size-medium: 1.25rem !default;
+$size-regular: 1rem !default;
+$size-small: 0.875rem !default;
+$size-tiny: 0.75rem !default;
+
+/* Weights */
+$weight-regular: 400 !default;
+$weight-medium: 500 !default;
+$weight-semibold: 600 !default;
+$weight-bold: 700 !default;
+$weight-black: 800 !default;
+
+/* Media queries */
+$device-small: 24rem !default;
+$device-medium: 40rem !default;
+$device-large: 56rem !default;
+$device-max: 72rem !default;
+
+/* global */
+#app {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
