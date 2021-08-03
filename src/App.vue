@@ -1,52 +1,29 @@
 <template>
-  <div class="container">
-    <h1 class="title">Chunk Norris generator</h1>
-    <div class="section-search-bar">
-      <search-bar />
-    </div>
-    <div class="section-categories">
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-      <Checkbox name="category1" label="label" />
-    </div>
-    <div class="section-jokes">
-      <div class="jokes-selection">
-        <a>main</a>
-        <a>My favs</a>
-      </div>
-      <div class="joke-list">
-        <JokeList :jokes="selectedJokes"/>
-      </div>
-    </div>
-  </div>
+  <Suspense>
+    <template #default>
+      <Overview />
+    </template>
+    <template #fallback>
+      <div v-if="!!error" class="error">Ooops, please refresh</div>
+    </template>
+  </Suspense>
 </template>
 
 <script>
-  import { defineComponent } from 'vue';
-  import SearchBar from './components/SearchBar.vue';
-  import Checkbox from './components/Checkbox.vue';
-  import JokeList from './components/JokeList.vue';
-
-  export default defineComponent({
+   import { defineComponent, defineAsyncComponent, ref, onErrorCaptured } from 'vue';
+   export default defineComponent({
     name: 'App',
-    components: { SearchBar, Checkbox, JokeList },
+    components: { 
+      Overview: defineAsyncComponent(() => import('./views/Overview.vue')),
+     },
     setup() {
-      console.log('yoo');
+      const error = ref();
+      onErrorCaptured((err) => {
+        error.value = err;
+        return true;
+      });
       return {
-        selectedJokes: [{
-          value:'joke 1',
-          id:'1'
-        },
-        {
-          value:'joke 2',
-          id:'2'
-        }]
+        error
       };
     }
   });
@@ -66,7 +43,9 @@
       min-height: 50vh;
     }
   }
-
+  .title {
+    text-align: center;
+  }
   .section-categories {
     display: flex;
     justify-content: flex-start;

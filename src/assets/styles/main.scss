@@ -98,6 +98,24 @@ $device-medium: 40rem !default;
 $device-large: 56rem !default;
 $device-max: 72rem !default;
 
+/* elements */
+
+a:not([class]) {
+  color: $color-alpha;
+  cursor: pointer;
+  text-decoration: none;
+
+  strong {
+    color: currentColor;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
 /* global */
 #app {
   width: 100%;
