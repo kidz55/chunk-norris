@@ -15,7 +15,7 @@
         autofocus
         data-test-search-bar-input
       />
-      <joke-list :jokes="selectedJokes" @onUpdateFavorites="updateFavorites" />
+      <joke-list :jokes="selectedJokes" @onUpdateFavorites="updateFavorites" :isLoading="isLoading" />
     </div>
   </div>
 </template>
@@ -31,6 +31,15 @@
       jokes: {
         type: Array,
         required: true
+      },
+      isLoading: {
+        type: Boolean,
+        required: true
+      }
+    },
+    watch: {
+      jokes() {
+        this.option = 'main';
       }
     },
     setup(props) {
@@ -38,6 +47,7 @@
       const filter = ref('');
       const favoriteJokes = ref([]);
       const option = ref('main');
+
       const updateFavorites = (joke) => {
         const index = favoriteJokes.value.findIndex((jk) => jk.id === joke.id);
         if (index > -1) {
@@ -54,21 +64,23 @@
       };
 
       const filteredJokes = computed(() => {
-        return jokes.value
-          .map((jk) => {
-            return {
-              ...jk,
-              isSelected: favoriteJokes.value.findIndex((j) => jk.id === j.id) > -1
-            };
-          })
-          .filter((jk) => jk.value.indexOf(filter.value) > -1);
+        return jokes.value.map((jk) => {
+          return {
+            ...jk,
+            isSelected: favoriteJokes.value.findIndex((j) => jk.id === j.id) > -1
+          };
+        });
       });
 
+      const selectedJokes = computed(() => {
+        const selected = option.value === 'favorites' ? favoriteJokes.value : filteredJokes.value;
+        return selected.filter((jk) => jk.value.toLowerCase().indexOf(filter.value.toLowerCase()) > -1);
+      });
       return {
         updateFavorites,
         option,
         filter,
-        selectedJokes: computed(() => (option.value === 'favorites' ? favoriteJokes.value : filteredJokes.value))
+        selectedJokes
       };
     }
   });

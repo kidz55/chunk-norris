@@ -2,10 +2,10 @@
   <div class="container">
     <h1 class="title">Chunk Norris generator</h1>
     <div class="section-action">
-      <ActionButton>GET 10 RANDOM JOKES</ActionButton>
+      <ActionButton @click="fetchJokes">GET 10 RANDOM JOKES</ActionButton>
     </div>
     <categories v-if="categories" :categories="categories" @updateCategories="updateCategories" />
-    <jokes v-if="jokes" :jokes="jokes" />
+    <jokes v-if="jokes" :isLoading="isJokesLoading" :jokes="jokes" />
   </div>
 </template>
 
@@ -20,33 +20,17 @@
     name: 'Overview',
     components: { Categories, Jokes, ActionButton },
     async setup() {
-      const categories = ref([]);
-      const option = ref('main');
-      const jokes = ref([
-        {
-          icon_url: 'https://assets.chucknorris.host/img/avatar/chuck-norris.png',
-          id: 'QpDLFSjNQIiE294JRowPTQ',
-          url: '',
-          value: 'Chuck Norris puts out forest fires with his piss, while singing I make it rain'
-        },
-        {
-          icon_url: 'https://assets.chucknorris.host/img/avatar/chuck-norris.png',
-          id: 'qgshozvsrboyqdbqa-vz3q',
-          url: 'https://api.chucknorris.io/jokes/qgshozvsrboyqdbqa-vz3q',
-          value: 'To Chuck Norris, everything contains a vulnerability.'
-        },
-        {
-          icon_url: 'https://assets.chucknorris.host/img/avatar/chuck-norris.png',
-          id: 'IUltEG8kQOKXFgswV7ZOoA',
-          url: 'https://api.chucknorris.io/jokes/IUltEG8kQOKXFgswV7ZOoA',
-          value: 'one the boy said HELP HELP ITS CHUCK NORRIS'
-        }
-      ]);
+      const categories = ref(null);
+      const jokes = ref(null);
       const selectedCategories = ref([]);
-
+      const isJokesLoading = ref(false);
       const fetchCategory = async () => {
-        const response = await api.get('jokes/categories');
-        categories.value = response.data;
+        try {
+          const response = await api.get('categories');
+          categories.value = response.data.categories;
+        } catch (e) {
+          // handle error
+        }
       };
 
       const updateCategories = (selection) => {
@@ -54,23 +38,40 @@
       };
 
       const fetchJokes = async () => {
-        let url = 'jokes/random';
+        isJokesLoading.value = true;
+        let url = 'random';
         const queryParams = buildQuery();
-        url = queryParams ? `?${queryParams}` : url;
-        const response = await api.get(url);
-        jokes.value = response.data;
+        if (queryParams) url += `?${queryParams}`;
+        try {
+          const response = await api.get(url);
+          jokes.value = response.data.jokes;
+        } catch (e) {
+          // handle error
+        } finally {
+          isJokesLoading.value = false;
+        }
       };
 
       const buildQuery = () => {
         let query = '';
-        if (selectedCategories.value.length) query += `categories=${selectedCategories.value.join(',')}`;
+        if (selectedCategories.value.length) {
+          selectedCategories.value.forEach((cat, i) => {
+            query += `categories=${cat}`;
+            if (i < selectedCategories.value.length - 1) {
+              query += '&';
+            }
+          });
+        }
+
         return query;
       };
 
       await fetchCategory();
+      await fetchJokes();
       return {
         categories,
-        option,
+        selectedCategories,
+        isJokesLoading,
         updateCategories,
         fetchJokes,
         jokes

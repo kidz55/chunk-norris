@@ -22,7 +22,12 @@
         required: true
       }
     },
-    async setup(props, { emit }) {
+    watch: {
+      categoryList() {
+        this.$emit('updateCategories', this.selectedCategories);
+      }
+    },
+    async setup(props) {
       const { categories } = toRefs(props);
       const selectedCategories = ref([]);
 
@@ -35,12 +40,9 @@
         if (index > -1) {
           selectedCategories.value.splice(index, 1);
           return;
-        } else {
-          selectedCategories.value.push(category.name);
         }
-        emit('updateCategories', selectedCategories);
+        selectedCategories.value.push(category.name);
       };
-
       return {
         categoryList: computed(() => {
           return categories.value.map((cat) => {
