@@ -6,15 +6,16 @@
       :name="category.name"
       :initValue="category.isSelected"
       @update="updateCategorySelection"
+      data-test-category-checkbox
     />
-    <Checkbox name="all" @update="selectAllCategory" />
+    <Checkbox name="all" @update="selectAllCategory" data-test-category-checkbox-all />
   </div>
 </template>
 
 <script>
-  import { defineComponent, ref, toRefs, computed } from 'vue';
+  import { ref, toRefs, computed } from 'vue';
   import Checkbox from '../components/Checkbox.vue';
-  export default defineComponent({
+  export default {
     components: { Checkbox },
     props: {
       categories: {
@@ -27,7 +28,7 @@
         this.$emit('updateCategories', this.selectedCategories);
       }
     },
-    async setup(props) {
+    setup(props) {
       const { categories } = toRefs(props);
       const selectedCategories = ref([]);
 
@@ -54,7 +55,7 @@
         selectAllCategory
       };
     }
-  });
+  };
 </script>
 
 <style>

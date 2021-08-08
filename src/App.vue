@@ -10,12 +10,12 @@
 </template>
 
 <script>
-   import { defineComponent, defineAsyncComponent, ref, onErrorCaptured } from 'vue';
-   export default defineComponent({
+  import { defineComponent, defineAsyncComponent, ref, onErrorCaptured } from 'vue';
+  export default defineComponent({
     name: 'App',
-    components: { 
-      Overview: defineAsyncComponent(() => import('./views/Overview.vue')),
-     },
+    components: {
+      Overview: defineAsyncComponent(() => import('./views/Overview.vue'))
+    },
     setup() {
       const error = ref();
       onErrorCaptured((err) => {
@@ -30,19 +30,6 @@
 </script>
 
 <style>
-  .section-search-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    margin: 4rem auto 2rem auto;
-    max-width: 54rem;
-    animation: 220ms appearTop cubic-bezier(0.15, 0.75, 0.5, 1.5);
-
-    @media (min-width: $device-large) {
-      min-height: 50vh;
-    }
-  }
   .title {
     text-align: center;
   }

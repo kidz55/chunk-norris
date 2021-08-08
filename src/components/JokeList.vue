@@ -1,12 +1,12 @@
 <template>
-  <div class="joke-list">
-    <div v-if="isLoading" class="loading">
+  <div class="joke-list" data-test-joke-list>
+    <div v-if="isLoading" class="loading" data-test-joke-list-loading>
       loading...
     </div>
-    <div v-else-if="jokes.length === 0" class="no-joke">
+    <div v-else-if="jokes.length === 0" class="no-joke" data-test-no-joke>
       No jokes for the moment :(
     </div>
-    <Joke v-else v-for="joke in jokes" :key="joke.id" :joke="joke" @onToggleFavorite="updateFavorites" />
+    <Joke v-else v-for="joke in jokes" :key="joke.id" :joke="joke" @onToggleFavorite="updateFavorites" data-test-joke />
   </div>
 </template>
 

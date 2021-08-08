@@ -1,8 +1,14 @@
 <template>
-  <div class="section-jokes">
+  <div class="section-jokes" data-test-jokes-section>
     <div class="jokes-option">
-      <a @click="option = 'main'" class="tab-item" :class="{ 'is-active': option === 'main' }">RANDOM JOKES</a>
-      <a @click="option = 'favorites'" class="tab-item" :class="{ 'is-active': option === 'favorites' }"
+      <a @click="option = 'main'" class="tab-item" :class="{ 'is-active': option === 'main' }" data-test-joke-action
+        >RANDOM JOKES</a
+      >
+      <a
+        @click="option = 'favorites'"
+        class="tab-item"
+        :class="{ 'is-active': option === 'favorites' }"
+        data-test-joke-action-fav
         >MY FAVOURITES JOKES</a
       >
     </div>
@@ -15,7 +21,12 @@
         autofocus
         data-test-search-bar-input
       />
-      <joke-list :jokes="selectedJokes" @onUpdateFavorites="updateFavorites" :isLoading="isLoading" />
+      <joke-list
+        :jokes="filteredJokes"
+        @onUpdateFavorites="updateFavorites"
+        :isLoading="isLoading"
+        data-test-joke-list
+      />
     </div>
   </div>
 </template>
@@ -63,7 +74,7 @@
         });
       };
 
-      const filteredJokes = computed(() => {
+      const selectedJokes = computed(() => {
         return jokes.value.map((jk) => {
           return {
             ...jk,
@@ -72,15 +83,18 @@
         });
       });
 
-      const selectedJokes = computed(() => {
-        const selected = option.value === 'favorites' ? favoriteJokes.value : filteredJokes.value;
+      const filteredJokes = computed(() => {
+        const selected = option.value === 'favorites' ? favoriteJokes.value : selectedJokes.value;
         return selected.filter((jk) => jk.value.toLowerCase().indexOf(filter.value.toLowerCase()) > -1);
       });
+
       return {
         updateFavorites,
         option,
         filter,
-        selectedJokes
+        filteredJokes,
+        selectedJokes,
+        favoriteJokes
       };
     }
   });

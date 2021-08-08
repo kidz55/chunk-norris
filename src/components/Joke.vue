@@ -1,11 +1,10 @@
 <template>
-  <div class="joke">
+  <div class="joke" data-test-joke>
     <div class="content">
-      <div class="badge" :class="`is-${categoryHash}`" v-show="category">{{ category }}</div>
-      <div class="description">{{ joke.value }}</div>
+      <div class="badge" :class="`is-${categoryHash}`" v-show="category" data-test-joke-category>{{ category }}</div>
+      <div class="description" data-test-joke-content>{{ joke.value }}</div>
     </div>
-
-    <a @click="toggleFavorite" class="action">
+    <a @click="toggleFavorite" class="action" data-test-joke-action>
       <icon-star :isSelected="joke.isSelected" />
     </a>
   </div>

@@ -5,17 +5,15 @@
     role="button"
     :aria-label="text"
     :class="{
-      'is-disabled': isDisabled,
-      'is-loading': isLoading
+      'is-disabled': isDisabled
     }"
-    :disabled="isDisabled || isLoading"
+    :disabled="isDisabled"
     @click="$emit('click', $event)"
   >
     <span class="btn-label">
       {{ text }}
       <slot></slot>
     </span>
-    <span v-if="isLoading" class="btn-loader"></span>
   </button>
 </template>
 
@@ -33,11 +31,6 @@
         type: Boolean,
         required: false,
         default: false
-      },
-      isLoading: {
-        type: Boolean,
-        required: false,
-        default: false
       }
     },
     emits: ['click']
@@ -45,10 +38,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .btn-loader {
-    display: none;
-  }
-
   .btn {
     flex-shrink: 0;
     min-width: 5em;
@@ -73,13 +62,6 @@
     box-shadow: 0 1px 2px 0 rgba(255, 84, 81, 0.2), 0 1px 3px 0 rgba(255, 86, 81, 0.1);
     transition: box-shadow 0.16s ease-out, background 0.16s ease-out;
     border: 1px solid rgba(0, 0, 0, 0.1);
-
-    .btn-label {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-    }
 
     @media (max-width: $device-small) {
       width: 100%;
@@ -108,77 +90,6 @@
       color: $color-grey-medium;
       box-shadow: none;
       background-color: $color-light;
-    }
-
-    &.is-loading {
-      position: relative;
-      box-shadow: none;
-      background: $color-white;
-      color: $color-alpha;
-      background-color: $color-white;
-
-      &::before {
-        position: absolute;
-        content: '';
-        width: 100%;
-        height: 50%;
-        top: 0;
-        right: 0;
-        background-color: $color-alpha;
-        animation: 0.6s linear infinite loader;
-      }
-
-      &::after {
-        position: absolute;
-        content: '';
-        width: 100%;
-        height: 100%;
-        top: 50%;
-        right: 0;
-        background-color: $color-alpha;
-        animation: 0.6s linear infinite loader-reverse;
-        animation-delay: 0.3s;
-        visibility: hidden;
-      }
-
-      .btn-loader {
-        display: block;
-        position: absolute;
-        z-index: 1;
-        content: '';
-        top: 2px;
-        right: 2px;
-        bottom: 2px;
-        left: 2px;
-        border-radius: 1.25em;
-        background-color: $color-white;
-      }
-
-      .btn-label {
-        position: relative;
-        z-index: 2;
-      }
-    }
-  }
-
-  @keyframes loader {
-    0% {
-      left: -100%;
-    }
-
-    100% {
-      left: 100%;
-    }
-  }
-
-  @keyframes loader-reverse {
-    0% {
-      visibility: visible;
-      left: 100%;
-    }
-
-    100% {
-      left: -100%;
     }
   }
 </style>

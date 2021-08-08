@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container" data-test-overview>
     <h1 class="title">Chunk Norris generator</h1>
-    <div class="section-action">
-      <ActionButton @click="fetchJokes">GET 10 RANDOM JOKES</ActionButton>
+    <div class="section-action" data-test-action>
+      <ActionButton @click="fetchJokes" data-test-action-button>GET 10 RANDOM JOKES</ActionButton>
     </div>
-    <categories v-if="categories" :categories="categories" @updateCategories="updateCategories" />
-    <jokes v-if="jokes" :isLoading="isJokesLoading" :jokes="jokes" />
+    <categories v-if="categories" :categories="categories" @updateCategories="updateCategories" data-test-category />
+    <jokes v-if="jokes" :isLoading="isJokesLoading" :jokes="jokes" data-test-jokes />
   </div>
 </template>
 
@@ -19,7 +19,7 @@
   export default defineComponent({
     name: 'Overview',
     components: { Categories, Jokes, ActionButton },
-    async setup() {
+    setup() {
       const categories = ref(null);
       const jokes = ref(null);
       const selectedCategories = ref([]);
@@ -62,12 +62,11 @@
             }
           });
         }
-
         return query;
       };
 
-      await fetchCategory();
-      await fetchJokes();
+      fetchCategory();
+      fetchJokes();
       return {
         categories,
         selectedCategories,
